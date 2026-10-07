@@ -1,18 +1,63 @@
 # Grooving
 
-Juego de ritmo de baile urbano desarrollado en Python con pygame.
+Juego de ritmo de baile urbano para el Obligatorio 1 de Programación 2.
 
-## Cómo se juega
-Antes de empezar, elegís los colores de tu personaje.
-Durante la partida, presionás las flechas cuando las señales
-llegan a la línea de baile.
+## Primera versión
 
-- Ganás al completar 20 pasos.
-- Perdés si cometés cinco errores.
-- Podés volver a jugar sin cerrar la ventana.
+Esta versión permite elegir los colores de una bailarina de pixel art, con
+gorra, remera corta, pantalón amplio y zapatillas. La estética toma como
+inspiración los arcades de pelea de los años 90, con un personaje original. La partida de ritmo,
+el puntaje, los sonidos y las pantallas finales se agregarán en próximos avances.
 
-## Estado
-Proyecto en desarrollo para el Obligatorio 1 de Programación 2.
+## Instalación y ejecución
+
+Necesitás Python 3 y pygame. En la terminal:
+
+```bash
+python3 -m pip install pygame
+```
+
+Abrí la carpeta `Grooving` en VS Code y, en su terminal, ejecutá:
+
+```bash
+python3 main.py
+```
+
+## Controles actuales
+
+- `1`: cambiar el color de la remera y la gorra.
+- `2`: cambiar el color del pantalón.
+- `3`: cambiar el color del pelo.
+- `Esc` o la X de la ventana: salir.
+
+## Reglas previstas
+
+Presionar las flechas cuando las señales lleguen a la línea de baile.
+Ganar al completar 20 pasos y perder al cometer cinco errores.
+Poder reiniciar sin cerrar la ventana.
+
+## Archivos
+
+- `main.py`: ventana, eventos, textos y bucle principal.
+- `ajustes.py`: colores, medidas y opciones de personalización.
+- `jugador.py`: clase `Jugador`, elección de colores y dibujo del personaje.
+
+## Recursos
+
+El personaje original se dibuja con una lista de filas y rectángulos de pygame.
+Cada letra indica un color de la paleta; no se usan sprites de otros juegos. Esta versión no usa imágenes
+ni sonidos externos. La única biblioteca externa del juego es pygame.
+
+## Uso de inteligencia artificial
+
+Se utilizó ChatGPT/Codex como apoyo para organizar y generar la primera versión
+del código y la documentación, siguiendo los materiales de las clases.
+La revisión por parte de la estudiante y los comentarios personales están pendientes.
+
+## Repositorio
+
+https://github.com/pipicea-bit/Obligatorio-programaci-n-2-Maria-Pia-Cea-282539
 
 ## Autora
-María Pía Cea — 282539 
+
+María Pía Cea — 282539.
