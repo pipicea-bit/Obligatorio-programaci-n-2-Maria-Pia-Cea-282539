@@ -4,7 +4,7 @@ Juego de ritmo de baile urbano para el Obligatorio 1 de Programación 2.
 
 ## Primera versión
 
-Esta versión permite elegir los colores de una bailarina de pixel art, con
+Esta versión permite elegir los colores de una bailarina o un bailarín de pixel art, con
 gorra, remera corta, pantalón amplio y zapatillas. La estética toma como
 inspiración los arcades de pelea de los años 90, con un personaje original. La partida de ritmo,
 el puntaje, los sonidos y las pantallas finales se agregarán en próximos avances.
@@ -28,6 +28,7 @@ python3 main.py
 - `1`: cambiar el color de la remera y la gorra.
 - `2`: cambiar el color del pantalón.
 - `3`: cambiar el color del pelo.
+- `4`: elegir bailarina o bailarín. Conserva los colores elegidos.
 - `Esc` o la X de la ventana: salir.
 
 ## Reglas previstas

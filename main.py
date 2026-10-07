@@ -41,7 +41,7 @@ def main():
     titulo = pygame.font.SysFont(ajustes.FUENTE, ajustes.TAMANIO_TITULO, bold=True)
     fuente = pygame.font.SysFont(ajustes.FUENTE, ajustes.TAMANIO_TEXTO, bold=True)
     chica = pygame.font.SysFont(ajustes.FUENTE, ajustes.TAMANIO_CHICO, bold=True)
-    bailarina = jugador.Jugador()
+    personaje = jugador.Jugador()
     andando = True
 
     while andando:
@@ -53,7 +53,7 @@ def main():
                 if evento.key == pygame.K_ESCAPE:
                     andando = False
                 else:
-                    bailarina.personalizar(evento.key)
+                    personaje.personalizar(evento.key)
 
         # 2. Actualizar: por ahora, la apariencia cambia con los eventos.
         # En el próximo avance agregaremos las señales que bajan solas.
@@ -64,13 +64,14 @@ def main():
         dibujar_texto(pantalla, titulo, "GROOVING", ajustes.CONTORNO, 44, 57)
         dibujar_texto(pantalla, titulo, "GROOVING", ajustes.AMARILLO, 40, 53)
         dibujar_texto(pantalla, chica, "TU ESTILO. TU RITMO.", ajustes.ROSA, 43, 130)
-        dibujar_texto(pantalla, fuente, "ELEGÍ TU ESTILO", ajustes.BLANCO, 50, 230)
-        dibujar_texto(pantalla, fuente, "1  REMERA + GORRA", ajustes.LILA, 50, 295)
-        dibujar_texto(pantalla, fuente, "2  PANTALÓN", ajustes.MENTA, 50, 340)
-        dibujar_texto(pantalla, fuente, "3  PELO", ajustes.ROSA, 50, 385)
+        dibujar_texto(pantalla, fuente, "ELEGÍ TU ESTILO", ajustes.BLANCO, 50, 205)
+        dibujar_texto(pantalla, fuente, "1  REMERA + GORRA", ajustes.LILA, 50, 260)
+        dibujar_texto(pantalla, fuente, "2  PANTALÓN", ajustes.MENTA, 50, 300)
+        dibujar_texto(pantalla, fuente, "3  PELO", ajustes.ROSA, 50, 340)
+        dibujar_texto(pantalla, fuente, "4  BAILARINA / BAILARÍN", ajustes.AMARILLO, 50, 380)
         dibujar_texto(pantalla, chica, "REPETÍ LA TECLA PARA CAMBIAR", ajustes.BLANCO, 50, 440)
-        dibujar_texto(pantalla, chica, "PLAYER 01", ajustes.AMARILLO, 565, 170)
-        bailarina.dibujar(pantalla)
+        dibujar_texto(pantalla, chica, personaje.personaje.upper(), ajustes.AMARILLO, 555, 170)
+        personaje.dibujar(pantalla)
         dibujar_texto(pantalla, chica, "PERSONALIZACIÓN  /  ESC: SALIR", ajustes.BLANCO, 50, 552)
         pygame.display.flip()
 
