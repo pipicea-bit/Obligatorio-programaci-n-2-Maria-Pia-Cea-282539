@@ -69,6 +69,7 @@ CANCIONES = [
     {"nombre": "FINAL BATTLE", "archivo": "final.wav", "bpm": 160, "nivel": "EXPERTO", "estilo": "DRUM & BASS"},
 ]
 VOLUMEN_MUSICA = 0.35
-PULSOS_ANTICIPACION = [3, 2.5, 2, 1.5, 1]
-PULSOS_ENTRE_NOTAS = [1, 1, 0.5, 0.5, 0.5]
+PULSOS_ANTICIPACION = [3, 2, 2.2, 1.5, 1]
+# Medio y difícil alternan un pulso y medio pulso para suavizar el salto.
+PULSOS_ENTRE_NOTAS = [[1], [1, 0.5], [1, 0.5], [0.5], [0.5]]
 PRIMER_PULSO = 4

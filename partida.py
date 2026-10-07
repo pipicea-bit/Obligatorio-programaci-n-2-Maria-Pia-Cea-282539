@@ -9,7 +9,7 @@ import nota
 def crear_partida(cancion=0):
     """Devuelve una partida nueva con la lista y los contadores vacíos."""
     return {"notas": [], "pasos": 0, "errores": 0, "puntos": 0,
-            "cancion": cancion, "proximo_pulso": ajustes.PRIMER_PULSO,
+            "cancion": cancion, "indice_ritmo": 0, "proximo_pulso": ajustes.PRIMER_PULSO,
             "mensaje": "SEGUÍ EL BEAT", "aviso": 0}
 
 
@@ -77,7 +77,10 @@ def actualizar(datos, tiempo):
     # Las llegadas siempre caen en pulsos o medios pulsos de la canción.
     while tiempo >= llegada - duracion:
         datos["notas"].append(nota.Nota(random.randint(0, 3), llegada, duracion))
-        datos["proximo_pulso"] = datos["proximo_pulso"] + ajustes.PULSOS_ENTRE_NOTAS[nivel]
+        ritmo = ajustes.PULSOS_ENTRE_NOTAS[nivel]
+        intervalo = ritmo[datos["indice_ritmo"] % len(ritmo)]
+        datos["proximo_pulso"] = datos["proximo_pulso"] + intervalo
+        datos["indice_ritmo"] = datos["indice_ritmo"] + 1
         llegada = datos["proximo_pulso"] * pulso_ms
     # Cada señal conserva la duración con la que fue creada.
     if datos["aviso"] > 0:

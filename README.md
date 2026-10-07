@@ -73,7 +73,9 @@ las señales que se pasan. Antes de jugar podés elegir entre cinco pistas instr
 
 Cada pista tiene su propia melodía, bajo, percusión y timbre. BPM significa
 pulsos por minuto. Las señales llegan sobre pulsos o medios pulsos musicales.
-Fácil y medio tienen un paso por pulso; desde difícil, uno por medio pulso.
+Fácil tiene un paso por pulso. Medio y difícil alternan separaciones de un
+pulso y medio pulso; medio da menos tiempo para anticipar que antes y difícil
+espacia más sus señales. Súper difícil y experto tienen un paso por medio pulso.
 La canción reinicia junto con la partida.
 
 ## Archivos
