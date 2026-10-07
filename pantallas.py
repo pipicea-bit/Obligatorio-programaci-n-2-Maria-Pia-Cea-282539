@@ -58,7 +58,7 @@ def personalizacion(pantalla, fuentes, personaje, nombre_confirmado, editando_no
     dibujar_texto(pantalla, fuentes["chica"], nombre_confirmado, ajustes.AMARILLO, 545, 170)
     personaje.dibujar(pantalla)
     dibujar_texto(pantalla, fuentes["chica"], "PERSONALIZACIÓN  /  ESC: SALIR", ajustes.BLANCO, 50, 552)
-    dibujar_texto(pantalla, fuentes["chica"], "ESPACIO: EMPEZAR", ajustes.MENTA, 50, 520)
+    dibujar_texto(pantalla, fuentes["chica"], "ESPACIO: ELEGIR NIVEL", ajustes.MENTA, 50, 520)
 
 
 def juego(pantalla, fuentes, personaje, datos, estado):
@@ -67,7 +67,7 @@ def juego(pantalla, fuentes, personaje, datos, estado):
     dibujar_texto(pantalla, fuentes["texto"], "GROOVING", ajustes.AMARILLO, 40, 25)
     dibujar_texto(pantalla, fuentes["texto"], f"PUNTOS {datos['puntos']}", ajustes.BLANCO, 250, 25)
     dibujar_texto(pantalla, fuentes["chica"], f"PASOS {datos['pasos']}/{ajustes.META_PASOS}   ERRORES {datos['errores']}/{ajustes.MAX_ERRORES}", ajustes.ROSA, 40, 65)
-    dibujar_texto(pantalla, fuentes["chica"], f"NIVEL {partida.obtener_nivel(datos)}", ajustes.MENTA, 550, 65)
+    dibujar_texto(pantalla, fuentes["chica"], ajustes.CANCIONES[datos["cancion"]]["nivel"], ajustes.MENTA, 550, 65)
     dibujar_texto(pantalla, fuentes["chica"], personaje.nombre, ajustes.AMARILLO, 545, 170)
     personaje.dibujar(pantalla)
     if estado == "jugando":
@@ -86,5 +86,30 @@ def juego(pantalla, fuentes, personaje, datos, estado):
             mensaje = "¡PERDISTE!"
         dibujar_texto(pantalla, fuentes["texto"], mensaje, ajustes.AMARILLO, 70, 260)
         dibujar_texto(pantalla, fuentes["chica"], "ENTER: VOLVER A JUGAR", ajustes.MENTA, 70, 325)
-        dibujar_texto(pantalla, fuentes["chica"], "P: CAMBIAR PERSONAJE", ajustes.ROSA, 70, 365)
+        dibujar_texto(pantalla, fuentes["chica"], "C: CAMBIAR NIVEL", ajustes.ROSA, 70, 365)
+        dibujar_texto(pantalla, fuentes["chica"], "P: CAMBIAR PERSONAJE", ajustes.BLANCO, 70, 405)
+    cancion = ajustes.CANCIONES[datos["cancion"]]
+    dibujar_texto(pantalla, fuentes["chica"], cancion["nombre"], ajustes.MENTA, 550, 520)
     dibujar_texto(pantalla, fuentes["chica"], "ESC: SALIR", ajustes.BLANCO, 40, 560)
+
+
+def elegir_cancion(pantalla, fuentes, personaje, seleccion):
+    """Muestra las cinco pistas y los controles para escucharlas y elegir."""
+    dibujar_escenario(pantalla)
+    dibujar_texto(pantalla, fuentes["titulo"], "GROOVING", ajustes.AMARILLO, 40, 53)
+    dibujar_texto(pantalla, fuentes["texto"], "ELEGÍ CANCIÓN / NIVEL", ajustes.MENTA, 50, 165)
+    for i in range(len(ajustes.CANCIONES)):
+        datos = ajustes.CANCIONES[i]
+        y = 210 + i * 55
+        color = ajustes.BLANCO
+        marca = "  "
+        if i == seleccion:
+            color = ajustes.AMARILLO
+            marca = "> "
+        dibujar_texto(pantalla, fuentes["texto"], marca + datos["nivel"], color, 50, y)
+        dibujar_texto(pantalla, fuentes["chica"], f"{datos['nombre']} / {datos['bpm']} BPM", ajustes.LILA, 75, y + 25)
+    dibujar_texto(pantalla, fuentes["chica"], personaje.nombre, ajustes.AMARILLO, 545, 170)
+    personaje.dibujar(pantalla)
+    dibujar_texto(pantalla, fuentes["chica"], "IZQUIERDA / DERECHA: ESCUCHAR", ajustes.BLANCO, 50, 505)
+    dibujar_texto(pantalla, fuentes["texto"], "ENTER: EMPEZAR", ajustes.MENTA, 50, 535)
+    dibujar_texto(pantalla, fuentes["chica"], "P: PERSONALIZAR / ESC: SALIR", ajustes.BLANCO, 50, 570)

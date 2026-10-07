@@ -41,12 +41,10 @@ LARGO_NOMBRE = 12
 
 CAMPO_NOMBRE = (50, 447, 340, 34)
 
-# Reglas de la partida: las velocidades están en píxeles por cuadro.
+# Reglas de la partida y posiciones de las señales.
 META_PASOS = 20
 MAX_ERRORES = 5
 PUNTOS_ACIERTO = 100
-VELOCIDAD_NOTA = 3
-INTERVALO_NOTAS = 45
 NOTA_INICIO_Y = 170
 LINEA_ACIERTO_Y = 450
 MARGEN_ACIERTO = 27
@@ -56,9 +54,21 @@ RADIO_NOTA = 20
 GROSOR_FLECHA = 5
 DURACION_MENSAJE = 35
 
-PASOS_POR_NIVEL = 5
-VELOCIDADES_NIVELES = [3, 4, 5, 6]
-INTERVALOS_NIVELES = [45, 38, 31, 24]
 DURACION_BAILE = 20
 DESPLAZAMIENTO_BAILE = 14
 SALTO_BAILE = 21
+
+VOLUMEN_EFECTOS = 0.45
+
+# Cada canción define un nivel. BPM significa pulsos por minuto.
+CANCIONES = [
+    {"nombre": "BARRIO GROOVE", "archivo": "barrio.wav", "bpm": 80, "nivel": "FÁCIL", "estilo": "BOOM BAP"},
+    {"nombre": "NEON STEPS", "archivo": "neon.wav", "bpm": 100, "nivel": "MEDIO", "estilo": "ELECTRO"},
+    {"nombre": "CYPHER NIGHT", "archivo": "cypher.wav", "bpm": 120, "nivel": "DIFÍCIL", "estilo": "FUNK ARCADE"},
+    {"nombre": "ROOFTOP FLOW", "archivo": "rooftop.wav", "bpm": 140, "nivel": "SÚPER DIFÍCIL", "estilo": "TRAP"},
+    {"nombre": "FINAL BATTLE", "archivo": "final.wav", "bpm": 160, "nivel": "EXPERTO", "estilo": "DRUM & BASS"},
+]
+VOLUMEN_MUSICA = 0.35
+PULSOS_ANTICIPACION = [3, 2.5, 2, 1.5, 1]
+PULSOS_ENTRE_NOTAS = [1, 1, 0.5, 0.5, 0.5]
+PRIMER_PULSO = 4

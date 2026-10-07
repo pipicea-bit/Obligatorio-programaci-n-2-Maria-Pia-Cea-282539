@@ -6,10 +6,11 @@ import ajustes
 import nota
 
 
-def crear_partida():
+def crear_partida(cancion=0):
     """Devuelve una partida nueva con la lista y los contadores vacíos."""
     return {"notas": [], "pasos": 0, "errores": 0, "puntos": 0,
-            "cuadros": 0, "mensaje": "SEGUÍ EL BEAT", "aviso": 0}
+            "cancion": cancion, "proximo_pulso": ajustes.PRIMER_PULSO,
+            "mensaje": "SEGUÍ EL BEAT", "aviso": 0}
 
 
 def obtener_columna(tecla):
@@ -30,11 +31,13 @@ def buscar_acierto(notas, columna):
     return None
 
 
-def registrar_paso(datos, tecla):
+def registrar_paso(datos, tecla, tiempo):
     """Evalúa una pulsación y devuelve acierto, error o un texto vacío."""
     columna = obtener_columna(tecla)
     if columna == -1:
         return ""
+    for senal in datos["notas"]:
+        senal.mover(tiempo)
     senal = buscar_acierto(datos["notas"], columna)
     if senal is not None:
         datos["notas"].remove(senal)
@@ -60,29 +63,30 @@ def obtener_estado(datos):
 
 
 def obtener_nivel(datos):
-    """Devuelve un nivel de 1 a 4, aumentando cada cinco pasos acertados."""
-    nivel = datos["pasos"] // ajustes.PASOS_POR_NIVEL + 1
-    if nivel > len(ajustes.VELOCIDADES_NIVELES):
-        nivel = len(ajustes.VELOCIDADES_NIVELES)
-    return nivel
+    """Devuelve el nivel de la canción elegida, de 1 a 5."""
+    return datos["cancion"] + 1
 
 
-def actualizar(datos):
-    """Mueve señales, agrega nuevas y cuenta las que se pasan de la línea."""
-    datos["cuadros"] = datos["cuadros"] + 1
+def actualizar(datos, tiempo):
+    """Programa señales sobre los pulsos musicales y cuenta las perdidas."""
     nivel = obtener_nivel(datos) - 1
-    if datos["cuadros"] >= ajustes.INTERVALOS_NIVELES[nivel]:
-        velocidad = ajustes.VELOCIDADES_NIVELES[nivel]
-        datos["notas"].append(nota.Nota(random.randint(0, 3), velocidad))
-        datos["cuadros"] = 0
-    # Las señales existentes conservan su velocidad: no aceleran de golpe.
+    bpm = ajustes.CANCIONES[datos["cancion"]]["bpm"]
+    pulso_ms = 60000 / bpm
+    duracion = pulso_ms * ajustes.PULSOS_ANTICIPACION[nivel]
+    llegada = datos["proximo_pulso"] * pulso_ms
+    # Las llegadas siempre caen en pulsos o medios pulsos de la canción.
+    while tiempo >= llegada - duracion:
+        datos["notas"].append(nota.Nota(random.randint(0, 3), llegada, duracion))
+        datos["proximo_pulso"] = datos["proximo_pulso"] + ajustes.PULSOS_ENTRE_NOTAS[nivel]
+        llegada = datos["proximo_pulso"] * pulso_ms
+    # Cada señal conserva la duración con la que fue creada.
     if datos["aviso"] > 0:
         datos["aviso"] = datos["aviso"] - 1
     else:
         datos["mensaje"] = "SEGUÍ EL BEAT"
     # Recorremos una copia para poder quitar elementos de la lista original.
     for senal in datos["notas"][:]:
-        senal.mover()
+        senal.mover(tiempo)
         if senal.y > ajustes.LINEA_ACIERTO_Y + ajustes.MARGEN_ACIERTO:
             datos["notas"].remove(senal)
             datos["errores"] = datos["errores"] + 1

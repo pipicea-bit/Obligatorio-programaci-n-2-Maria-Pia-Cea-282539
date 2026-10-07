@@ -23,15 +23,18 @@ def dibujar_flecha(pantalla, columna, y, color):
 class Nota:
     """Guarda la columna y la altura de una señal de ritmo."""
 
-    def __init__(self, columna, velocidad=ajustes.VELOCIDAD_NOTA):
-        """Crea una señal en la parte superior de su columna."""
-        self.velocidad = velocidad
+    def __init__(self, columna, llegada, duracion):
+        """Guarda cuándo debe llegar la señal y cuánto dura su recorrido."""
         self.columna = columna
+        self.llegada = llegada
+        self.duracion = duracion
         self.y = ajustes.NOTA_INICIO_Y
 
-    def mover(self):
-        """Hace bajar la señal en cada cuadro."""
-        self.y = self.y + self.velocidad
+    def mover(self, tiempo):
+        """Calcula la altura con el tiempo de la canción, en milisegundos."""
+        inicio = self.llegada - self.duracion
+        distancia = ajustes.LINEA_ACIERTO_Y - ajustes.NOTA_INICIO_Y
+        self.y = ajustes.NOTA_INICIO_Y + distancia * (tiempo - inicio) / self.duracion
 
     def dibujar(self, pantalla):
         """Dibuja una flecha del color de su columna."""
