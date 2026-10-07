@@ -29,6 +29,12 @@ python3 main.py
 - `2`: cambiar el color del pantalón.
 - `3`: cambiar el color del pelo.
 - `4`: elegir bailarina o bailarín. Conserva los colores elegidos.
+- `5`: elegir sin accesorio, lentes, cadena o auriculares.
+- Campo `Nombre`: escribí directamente al abrir el juego, sin presionar una
+  tecla para activar el campo. `Enter` confirma y muestra el nombre arriba del
+  personaje. `Retroceso` borra. Podés volver a editar haciendo clic en el campo.
+  El máximo es de 12 caracteres. Mientras escribís, los números son parte del
+  nombre; después de confirmar, las teclas 1 a 5 personalizan el personaje.
 - `Esc` o la X de la ventana: salir.
 
 ## Reglas previstas

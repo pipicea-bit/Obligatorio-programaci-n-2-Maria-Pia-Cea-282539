@@ -42,6 +42,10 @@ def main():
     fuente = pygame.font.SysFont(ajustes.FUENTE, ajustes.TAMANIO_TEXTO, bold=True)
     chica = pygame.font.SysFont(ajustes.FUENTE, ajustes.TAMANIO_CHICO, bold=True)
     personaje = jugador.Jugador()
+    nombre_confirmado = personaje.nombre
+    personaje.nombre = ""
+    editando_nombre = True
+    campo_nombre = pygame.Rect(ajustes.CAMPO_NOMBRE)
     andando = True
 
     while andando:
@@ -49,9 +53,22 @@ def main():
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 andando = False
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                editando_nombre = campo_nombre.collidepoint(evento.pos)
             elif evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_ESCAPE:
                     andando = False
+                elif editando_nombre:
+                    # El nombre se muestra sobre el personaje solo al confirmarlo.
+                    if evento.key == pygame.K_RETURN:
+                        if personaje.nombre.strip() != "":
+                            personaje.nombre = personaje.nombre.strip()
+                            nombre_confirmado = personaje.nombre
+                        else:
+                            personaje.nombre = nombre_confirmado
+                        editando_nombre = False
+                    else:
+                        personaje.editar_nombre(evento)
                 else:
                     personaje.personalizar(evento.key)
 
@@ -64,13 +81,24 @@ def main():
         dibujar_texto(pantalla, titulo, "GROOVING", ajustes.CONTORNO, 44, 57)
         dibujar_texto(pantalla, titulo, "GROOVING", ajustes.AMARILLO, 40, 53)
         dibujar_texto(pantalla, chica, "TU ESTILO. TU RITMO.", ajustes.ROSA, 43, 130)
-        dibujar_texto(pantalla, fuente, "ELEGÍ TU ESTILO", ajustes.BLANCO, 50, 205)
-        dibujar_texto(pantalla, fuente, "1  REMERA + GORRA", ajustes.LILA, 50, 260)
-        dibujar_texto(pantalla, fuente, "2  PANTALÓN", ajustes.MENTA, 50, 300)
-        dibujar_texto(pantalla, fuente, "3  PELO", ajustes.ROSA, 50, 340)
-        dibujar_texto(pantalla, fuente, "4  BAILARINA / BAILARÍN", ajustes.AMARILLO, 50, 380)
-        dibujar_texto(pantalla, chica, "REPETÍ LA TECLA PARA CAMBIAR", ajustes.BLANCO, 50, 440)
-        dibujar_texto(pantalla, chica, personaje.personaje.upper(), ajustes.AMARILLO, 555, 170)
+        dibujar_texto(pantalla, fuente, "ELEGÍ TU ESTILO", ajustes.BLANCO, 50, 180)
+        dibujar_texto(pantalla, fuente, "1  REMERA + GORRA", ajustes.LILA, 50, 225)
+        dibujar_texto(pantalla, fuente, "2  PANTALÓN", ajustes.MENTA, 50, 260)
+        dibujar_texto(pantalla, fuente, "3  PELO", ajustes.ROSA, 50, 295)
+        dibujar_texto(pantalla, fuente, "4  BAILARINA / BAILARÍN", ajustes.AMARILLO, 50, 330)
+        dibujar_texto(pantalla, fuente, "5  ACCESORIOS", ajustes.MENTA, 50, 365)
+        dibujar_texto(pantalla, chica, ajustes.ACCESORIOS[personaje.accesorio], ajustes.BLANCO, 85, 395)
+        dibujar_texto(pantalla, chica, "NOMBRE", ajustes.ROSA, 50, 425)
+        pygame.draw.rect(pantalla, ajustes.CONTORNO, campo_nombre)
+        borde = ajustes.ROSA
+        texto_nombre = personaje.nombre
+        if editando_nombre:
+            borde = ajustes.MENTA
+            texto_nombre = texto_nombre + "_"
+        pygame.draw.rect(pantalla, borde, campo_nombre, ajustes.GROSOR_LINEA)
+        dibujar_texto(pantalla, chica, texto_nombre, ajustes.BLANCO, 60, 455)
+        dibujar_texto(pantalla, chica, "ENTER: CONFIRMAR / CLIC: EDITAR", ajustes.BLANCO, 50, 490)
+        dibujar_texto(pantalla, chica, nombre_confirmado, ajustes.AMARILLO, 545, 170)
         personaje.dibujar(pantalla)
         dibujar_texto(pantalla, chica, "PERSONALIZACIÓN  /  ESC: SALIR", ajustes.BLANCO, 50, 552)
         pygame.display.flip()

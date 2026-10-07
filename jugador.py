@@ -5,7 +5,7 @@ import ajustes
 
 
 class Jugador:
-    """Representa un personaje de baile urbano dibujada sobre una cuadrícula."""
+    """Representa un personaje de baile urbano dibujado sobre una cuadrícula."""
 
     def __init__(self):
         """Guarda las opciones de ropa y el dibujo de píxeles del personaje."""
@@ -13,6 +13,8 @@ class Jugador:
         self.remera = 0
         self.pantalon = 0
         self.pelo = 0
+        self.accesorio = 0
+        self.nombre = "PLAYER 01"
         # Cada letra es un color. Los puntos son espacios transparentes.
         # Esta lista forma una figura: gorra, pelo, rostro, ropa y zapatillas.
         self.dibujo_bailarina = [
@@ -82,7 +84,7 @@ class Jugador:
         return opcion
 
     def personalizar(self, tecla):
-        """Cambia remera y gorra, pantalón o pelo y el personaje con las teclas 1 a 4."""
+        """Cambia remera y gorra, pantalón o pelo y el personaje con las teclas 1 a 5."""
         if tecla == pygame.K_1:
             self.remera = self.siguiente_color(self.remera, ajustes.COLORES_REMERA)
         elif tecla == pygame.K_2:
@@ -95,6 +97,46 @@ class Jugador:
                 self.personaje = "bailarin"
             else:
                 self.personaje = "bailarina"
+
+        elif tecla == pygame.K_5:
+            self.accesorio = self.siguiente_color(self.accesorio, ajustes.ACCESORIOS)
+
+    def editar_nombre(self, evento):
+        """Agrega caracteres al nombre o borra el último con Retroceso."""
+        if evento.key == pygame.K_BACKSPACE:
+            self.nombre = self.nombre[:-1]
+        elif len(self.nombre) < ajustes.LARGO_NOMBRE and evento.unicode.isprintable():
+            self.nombre = self.nombre + evento.unicode
+
+    def dibujar_accesorio(self, pantalla):
+        """Dibuja lentes, cadena o auriculares sobre la cuadrícula del personaje."""
+        piezas = []
+        color = ajustes.AMARILLO
+        if self.accesorio == 1:
+            piezas = [(10, 7, 3, 2), (14, 7, 3, 2), (13, 7, 1, 1)]
+            color = ajustes.CONTORNO
+        elif self.accesorio == 2:
+            piezas = [(10, 13, 1, 2), (14, 13, 1, 2), (11, 15, 3, 1), (12, 16, 1, 1)]
+        elif self.accesorio == 3:
+            # Vincha por encima de la gorra y almohadillas a ambos lados.
+            piezas = [(9, 0, 8, 2), (7, 1, 2, 5), (17, 1, 2, 5),
+                      (6, 5, 4, 6), (17, 5, 4, 6)]
+            color = ajustes.CONTORNO
+        for columna, fila, ancho, alto in piezas:
+            x = ajustes.PERSONAJE_X + columna * ajustes.PIXEL
+            y = ajustes.PERSONAJE_Y + fila * ajustes.PIXEL
+            pygame.draw.rect(pantalla, color,
+                             (x, y, ancho * ajustes.PIXEL, alto * ajustes.PIXEL))
+
+        if self.accesorio == 3:
+            # Las zonas claras separan la vincha y las copas del pelo oscuro.
+            detalles = [(9, 0, 8, 1), (8, 1, 1, 5), (17, 1, 1, 5),
+                        (7, 6, 2, 4), (18, 6, 2, 4)]
+            for columna, fila, ancho, alto in detalles:
+                x = ajustes.PERSONAJE_X + columna * ajustes.PIXEL
+                y = ajustes.PERSONAJE_Y + fila * ajustes.PIXEL
+                pygame.draw.rect(pantalla, ajustes.MENTA,
+                                 (x, y, ancho * ajustes.PIXEL, alto * ajustes.PIXEL))
 
     def dibujar(self, pantalla):
         """Recorre filas y columnas y dibuja un cuadrado por cada letra."""
@@ -118,3 +160,4 @@ class Jugador:
                     y = ajustes.PERSONAJE_Y + fila * ajustes.PIXEL
                     pygame.draw.rect(pantalla, colores[letra],
                                      (x, y, ajustes.PIXEL, ajustes.PIXEL))
+        self.dibujar_accesorio(pantalla)
