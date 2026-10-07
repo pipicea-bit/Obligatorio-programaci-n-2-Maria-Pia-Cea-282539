@@ -2,6 +2,7 @@
 
 import pygame
 import ajustes
+import poses
 
 
 class Jugador:
@@ -15,6 +16,8 @@ class Jugador:
         self.pelo = 0
         self.accesorio = 0
         self.nombre = "PLAYER 01"
+        self.paso = -1
+        self.cuadros_baile = 0
         # Cada letra es un color. Los puntos son espacios transparentes.
         # Esta lista forma una figura: gorra, pelo, rostro, ropa y zapatillas.
         self.dibujo_bailarina = [
@@ -72,6 +75,10 @@ class Jugador:
 
     def obtener_dibujo(self):
         """Devuelve el dibujo del personaje seleccionado."""
+        if self.paso != -1:
+            if self.personaje == "bailarin":
+                return poses.BAILARIN[self.paso]
+            return poses.BAILARINA[self.paso]
         if self.personaje == "bailarin":
             return self.dibujo_bailarin
         return self.dibujo_bailarina
@@ -108,6 +115,32 @@ class Jugador:
         elif len(self.nombre) < ajustes.LARGO_NOMBRE and evento.unicode.isprintable():
             self.nombre = self.nombre + evento.unicode
 
+    def bailar(self, columna):
+        """Activa un paso de baile según la flecha presionada."""
+        self.paso = columna
+        self.cuadros_baile = ajustes.DURACION_BAILE
+
+    def actualizar_baile(self):
+        """Vuelve a la pose inicial al terminar la animación del paso."""
+        if self.cuadros_baile > 0:
+            self.cuadros_baile = self.cuadros_baile - 1
+        else:
+            self.paso = -1
+
+    def detener_baile(self):
+        """Deja al personaje en reposo al salir o reiniciar una partida."""
+        self.paso = -1
+        self.cuadros_baile = 0
+
+    def posicion_pixel(self, columna, fila):
+        """Devuelve la posición de un píxel con la pose de baile aplicada."""
+        x = ajustes.PERSONAJE_X + columna * ajustes.PIXEL
+        y = ajustes.PERSONAJE_Y + fila * ajustes.PIXEL
+        # La pose cambia brazos y piernas; el groove baja también la cabeza.
+        if self.paso == 1:
+            y = y + 2 * ajustes.PIXEL
+        return x, y
+
     def dibujar_accesorio(self, pantalla):
         """Dibuja lentes, cadena o auriculares sobre la cuadrícula del personaje."""
         piezas = []
@@ -123,8 +156,7 @@ class Jugador:
                       (6, 5, 4, 6), (17, 5, 4, 6)]
             color = ajustes.CONTORNO
         for columna, fila, ancho, alto in piezas:
-            x = ajustes.PERSONAJE_X + columna * ajustes.PIXEL
-            y = ajustes.PERSONAJE_Y + fila * ajustes.PIXEL
+            x, y = self.posicion_pixel(columna, fila)
             pygame.draw.rect(pantalla, color,
                              (x, y, ancho * ajustes.PIXEL, alto * ajustes.PIXEL))
 
@@ -133,8 +165,7 @@ class Jugador:
             detalles = [(9, 0, 8, 1), (8, 1, 1, 5), (17, 1, 1, 5),
                         (7, 6, 2, 4), (18, 6, 2, 4)]
             for columna, fila, ancho, alto in detalles:
-                x = ajustes.PERSONAJE_X + columna * ajustes.PIXEL
-                y = ajustes.PERSONAJE_Y + fila * ajustes.PIXEL
+                x, y = self.posicion_pixel(columna, fila)
                 pygame.draw.rect(pantalla, ajustes.MENTA,
                                  (x, y, ancho * ajustes.PIXEL, alto * ajustes.PIXEL))
 

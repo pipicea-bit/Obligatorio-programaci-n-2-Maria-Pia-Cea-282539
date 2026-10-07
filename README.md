@@ -2,12 +2,12 @@
 
 Juego de ritmo de baile urbano para el Obligatorio 1 de Programación 2.
 
-## Primera versión
+## Versión jugable
 
 Esta versión permite elegir los colores de una bailarina o un bailarín de pixel art, con
 gorra, remera corta, pantalón amplio y zapatillas. La estética toma como
-inspiración los arcades de pelea de los años 90, con un personaje original. La partida de ritmo,
-el puntaje, los sonidos y las pantallas finales se agregarán en próximos avances.
+inspiración los arcades de pelea de los años 90, con un personaje original. La partida ya incluye señales que bajan, puntaje y pantallas de victoria y
+derrota. Los sonidos y el informe se agregarán en próximos avances.
 
 ## Instalación y ejecución
 
@@ -37,17 +37,38 @@ python3 main.py
   nombre; después de confirmar, las teclas 1 a 5 personalizan el personaje.
 - `Esc` o la X de la ventana: salir.
 
-## Reglas previstas
+## Cómo jugar
 
-Presionar las flechas cuando las señales lleguen a la línea de baile.
-Ganar al completar 20 pasos y perder al cometer cinco errores.
-Poder reiniciar sin cerrar la ventana.
+1. Escribí el nombre y confirmalo con `Enter`.
+2. Personalizá el personaje y presioná `Espacio` para empezar.
+3. Presioná izquierda, abajo, arriba o derecha cuando la señal de esa columna
+   esté sobre la flecha fija, en la zona clara.
+4. Cada acierto suma 100 puntos. Una señal perdida o una flecha pulsada fuera
+   de tiempo cuenta como error. Las demás teclas no suman errores.
+5. Ganás con 20 aciertos y perdés con cinco errores.
+6. Al terminar, `Enter` reinicia conservando tu personaje y `P` vuelve a la
+   personalización. `Esc` o la X cierran el juego.
+
+El personaje hace un paso por cada flecha con poses de pixel art distintas:
+izquierda y derecha extienden un brazo y abren las piernas, abajo hace un
+groove con rodillas flexionadas y arriba levanta los brazos y una pierna. La animación no suma puntos:
+para acertar hay que pulsar a tiempo.
+
+La dificultad aumenta cada cinco aciertos, hasta el nivel 4. Las señales nuevas
+bajan más rápido y aparecen más seguido. Las que ya están en pantalla conservan
+su velocidad para evitar cambios bruscos. El nivel se muestra en pantalla y se
+reinicia al volver a jugar.
+Esta versión todavía no incluye música ni efectos de sonido.
 
 ## Archivos
 
-- `main.py`: ventana, eventos, textos y bucle principal.
+- `main.py`: ventana, eventos, estados y bucle principal.
 - `ajustes.py`: colores, medidas y opciones de personalización.
-- `jugador.py`: clase `Jugador`, elección de colores y dibujo del personaje.
+- `jugador.py`: clase `Jugador`, nombre, apariencia y dibujo del personaje.
+- `poses.py`: dibujos de brazos y piernas para los cuatro pasos de cada personaje.
+- `nota.py`: clase `Nota`, movimiento y dibujo de las flechas.
+- `partida.py`: creación de partidas, reglas, aciertos, errores y puntaje.
+- `pantallas.py`: dibujo de la personalización, pista y resultados.
 
 ## Recursos
 
