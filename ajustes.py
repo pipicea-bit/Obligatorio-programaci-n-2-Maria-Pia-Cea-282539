@@ -42,8 +42,8 @@ LARGO_NOMBRE = 12
 CAMPO_NOMBRE = (50, 447, 340, 34)
 
 # Reglas de la partida y posiciones de las señales.
-META_PASOS = 20
-MAX_ERRORES = 5
+METAS_PASOS = [20, 30, 40, 50, 60]
+LIMITES_ERRORES = [5, 6, 7, 8, 9]
 PUNTOS_ACIERTO = 100
 NOTA_INICIO_Y = 170
 LINEA_ACIERTO_Y = 450

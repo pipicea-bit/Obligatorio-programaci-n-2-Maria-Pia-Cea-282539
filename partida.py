@@ -55,9 +55,9 @@ def registrar_paso(datos, tecla, tiempo):
 
 def obtener_estado(datos):
     """Devuelve victoria, derrota o jugando según los contadores."""
-    if datos["errores"] >= ajustes.MAX_ERRORES:
+    if datos["errores"] >= ajustes.LIMITES_ERRORES[datos["cancion"]]:
         return "derrota"
-    if datos["pasos"] >= ajustes.META_PASOS:
+    if datos["pasos"] >= ajustes.METAS_PASOS[datos["cancion"]]:
         return "victoria"
     return "jugando"
 

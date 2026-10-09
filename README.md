@@ -46,7 +46,8 @@ python3 main.py
    esté sobre la flecha fija, en la zona clara.
 4. Cada acierto suma 100 puntos. Una señal perdida o una flecha pulsada fuera
    de tiempo cuenta como error. Las demás teclas no suman errores.
-5. Ganás con 20 aciertos y perdés con cinco errores.
+5. Ganás al alcanzar la meta de aciertos del nivel y perdés al alcanzar su
+   límite de errores. Ambos se muestran en pantalla.
 6. Al terminar, `Enter` reinicia conservando tu personaje y `P` vuelve a la
    personalización. `C` permite elegir otra canción. `Esc` o la X cierran el juego.
 
@@ -58,8 +59,18 @@ para acertar hay que pulsar a tiempo.
 La canción elegida define la dificultad de toda la partida: fácil, medio,
 difícil, súper difícil o experto. Los niveles más altos tienen música más rápida,
 menos tiempo para anticipar las señales y más pasos por segundo. Podés elegir
-cualquier nivel desde el comienzo. La meta es de 20 aciertos y el límite es de
-cinco errores en todos los niveles.
+cualquier nivel desde el comienzo. Las metas y los límites aumentan para que los niveles más difíciles también
+sean más largos:
+
+| Nivel | Aciertos para ganar | Errores para perder |
+| --- | --- | --- |
+| Fácil | 20 | 5 |
+| Medio | 30 | 6 |
+| Difícil | 40 | 7 |
+| Súper difícil | 50 | 8 |
+| Experto | 60 | 9 |
+
+La derrota ocurre al alcanzar el número indicado, no después de superarlo.
 Un sonido agudo señala cada acierto y uno grave señala los errores, incluidas
 las señales que se pasan. Antes de jugar podés elegir entre cinco pistas instrumentales en bucle:
 

@@ -66,7 +66,7 @@ def juego(pantalla, fuentes, personaje, datos, estado):
     dibujar_escenario(pantalla)
     dibujar_texto(pantalla, fuentes["texto"], "GROOVING", ajustes.AMARILLO, 40, 25)
     dibujar_texto(pantalla, fuentes["texto"], f"PUNTOS {datos['puntos']}", ajustes.BLANCO, 250, 25)
-    dibujar_texto(pantalla, fuentes["chica"], f"PASOS {datos['pasos']}/{ajustes.META_PASOS}   ERRORES {datos['errores']}/{ajustes.MAX_ERRORES}", ajustes.ROSA, 40, 65)
+    dibujar_texto(pantalla, fuentes["chica"], f"PASOS {datos['pasos']}/{ajustes.METAS_PASOS[datos['cancion']]}   ERRORES {datos['errores']}/{ajustes.LIMITES_ERRORES[datos['cancion']]}", ajustes.ROSA, 40, 65)
     dibujar_texto(pantalla, fuentes["chica"], ajustes.CANCIONES[datos["cancion"]]["nivel"], ajustes.MENTA, 550, 65)
     dibujar_texto(pantalla, fuentes["chica"], personaje.nombre, ajustes.AMARILLO, 545, 170)
     personaje.dibujar(pantalla)
@@ -108,6 +108,8 @@ def elegir_cancion(pantalla, fuentes, personaje, seleccion):
             marca = "> "
         dibujar_texto(pantalla, fuentes["texto"], marca + datos["nivel"], color, 50, y)
         dibujar_texto(pantalla, fuentes["chica"], f"{datos['nombre']} / {datos['bpm']} BPM", ajustes.LILA, 75, y + 25)
+    limites = f"META {ajustes.METAS_PASOS[seleccion]} / ERRORES {ajustes.LIMITES_ERRORES[seleccion]}"
+    dibujar_texto(pantalla, fuentes["chica"], limites, ajustes.MENTA, 50, 485)
     dibujar_texto(pantalla, fuentes["chica"], personaje.nombre, ajustes.AMARILLO, 545, 170)
     personaje.dibujar(pantalla)
     dibujar_texto(pantalla, fuentes["chica"], "IZQUIERDA / DERECHA: ESCUCHAR", ajustes.BLANCO, 50, 505)
