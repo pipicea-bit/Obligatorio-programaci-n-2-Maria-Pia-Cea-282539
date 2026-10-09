@@ -40,13 +40,14 @@ python3 main.py
 ## Cómo jugar
 
 1. Escribí el nombre y confirmalo con `Enter`.
-2. Personalizá el personaje y presioná `Espacio` para elegir la canción.
-   Escuchá las pistas con izquierda/derecha y presioná `Enter` para empezar.
+2. Personalizá el personaje y presioná `Espacio` para elegir el modo con
+   arriba/abajo. Confirmá con `Enter`; en 1vs1 personalizá también al jugador 2.
+   Luego escuchá las pistas con izquierda/derecha y presioná `Enter` para empezar.
 3. Presioná izquierda, abajo, arriba o derecha cuando la señal de esa columna
    esté sobre la flecha fija, en la zona clara.
 4. Cada acierto suma 100 puntos. Una señal perdida o una flecha pulsada fuera
    de tiempo cuenta como error. Las demás teclas no suman errores.
-5. Ganás al alcanzar la meta de aciertos del nivel y perdés al alcanzar su
+5. En solo, ganás al alcanzar la meta de aciertos del nivel y perdés al alcanzar su
    límite de errores. Ambos se muestran en pantalla.
 6. Al terminar, `Enter` reinicia conservando tu personaje y `P` vuelve a la
    personalización. `C` permite elegir otra canción. `Esc` o la X cierran el juego.
@@ -97,6 +98,7 @@ La canción reinicia junto con la partida.
 - `jugador.py`: clase `Jugador`, nombre, apariencia y dibujo del personaje.
 - `poses.py`: dibujos de brazos y piernas para los cuatro pasos de cada personaje.
 - `nota.py`: clase `Nota`, movimiento y dibujo de las flechas.
+- `modos.py`: sesión, secuencia compartida, controles y ganador del duelo.
 - `partida.py`: creación de partidas, reglas, aciertos, errores y puntaje.
 - `pantallas.py`: dibujo de la personalización, pista y resultados.
 
@@ -143,3 +145,30 @@ canción. Con `60000 / bpm` se calcula cuánto dura un pulso. La altura de cada
 señal se calcula con ese tiempo, para que su llegada coincida con el pulso y
 no dependa de contar cuadros. Son operaciones, listas, diccionarios y clases
 simples; no se agregan bibliotecas externas para reproducir la música.
+
+## Modos
+
+Después de personalizar, `Espacio` abre la selección de modo. Elegí con arriba
+y abajo y confirmá con `Enter`.
+
+- **Solo:** completá la meta de la canción antes de agotar los errores.
+- **1vs1:** dos jugadores al mismo tiempo en la misma computadora. Después de elegir
+  el modo se personaliza el personaje del jugador 2. Ambos juegan con la misma
+  canción, dificultad y secuencia de flechas. Cada jugador termina al alcanzar la
+  meta o el límite de errores; el rival puede seguir hasta terminar. Gana quien tenga más puntos; si empatan, quien
+  tenga menos errores. Si ambos valores coinciden, hay empate.
+- **Survival:** sin meta de aciertos. La música y las flechas continúan hasta
+  agotar el límite de errores del nivel elegido. El tiempo y los puntos muestran
+  cuánto resististe. Cada 20 aciertos las señales nuevas se aceleran; desde la
+  segunda etapa aparecen cada medio pulso. La aceleración se limita a seis
+  etapas para mantener una velocidad jugable. Las flechas siguen la música.
+
+El jugador 1 usa las flechas. El jugador 2 usa `A` (izquierda), `S` (abajo),
+`W` (arriba) y `D` (derecha). La ventana se amplía para mostrar las dos pistas
+lado a lado, con personajes, puntos y errores independientes.
+
+Al terminar ambos jugadores, `Enter`
+inicia una revancha, `C` cambia el nivel y `M` vuelve a elegir el modo.
+
+`modos.py` guarda la sesión, los personajes, las dos rondas, la secuencia compartida y los
+resultados del duelo. Todas las estructuras son listas y diccionarios.
