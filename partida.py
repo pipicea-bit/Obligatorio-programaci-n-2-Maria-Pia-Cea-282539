@@ -6,11 +6,15 @@ import ajustes
 import nota
 
 
-def crear_partida(cancion=0):
+def crear_partida(cancion=0, modo="solo", secuencia=None):
     """Devuelve una partida nueva con la lista y los contadores vacíos."""
-    return {"notas": [], "pasos": 0, "errores": 0, "puntos": 0,
+    if modo == "survival":
+        cancion = 0
+    if secuencia is None:
+        secuencia = []
+    return {"modo": modo, "secuencia": secuencia, "notas": [], "pasos": 0, "errores": 0, "puntos": 0,
             "cancion": cancion, "indice_ritmo": 0, "proximo_pulso": ajustes.PRIMER_PULSO,
-            "mensaje": "SEGUÍ EL BEAT", "aviso": 0}
+            "mensaje": "SEGUÍ EL BEAT", "aviso": 0, "tiempo": 0, "etapa_survival": 0, "pasos_total": 0, "tiempo_total": 0}
 
 
 def obtener_columna(tecla):
@@ -42,6 +46,7 @@ def registrar_paso(datos, tecla, tiempo):
     if senal is not None:
         datos["notas"].remove(senal)
         datos["pasos"] = datos["pasos"] + 1
+        datos["pasos_total"] = datos["pasos_total"] + 1
         datos["puntos"] = datos["puntos"] + ajustes.PUNTOS_ACIERTO
         datos["mensaje"] = "¡BUEN PASO!"
         resultado = "acierto"
@@ -58,6 +63,8 @@ def obtener_estado(datos):
     if datos["errores"] >= ajustes.LIMITES_ERRORES[datos["cancion"]]:
         return "derrota"
     if datos["pasos"] >= ajustes.METAS_PASOS[datos["cancion"]]:
+        if datos["modo"] == "survival":
+            return "subir_nivel"
         return "victoria"
     return "jugando"
 
@@ -69,15 +76,24 @@ def obtener_nivel(datos):
 
 def actualizar(datos, tiempo):
     """Programa señales sobre los pulsos musicales y cuenta las perdidas."""
+    datos["tiempo"] = tiempo
     nivel = obtener_nivel(datos) - 1
     bpm = ajustes.CANCIONES[datos["cancion"]]["bpm"]
     pulso_ms = 60000 / bpm
     duracion = pulso_ms * ajustes.PULSOS_ANTICIPACION[nivel]
+    ritmo = ajustes.PULSOS_ENTRE_NOTAS[nivel]
+    if datos["modo"] == "survival" and datos["etapa_survival"] >= len(ajustes.CANCIONES):
+        # Después de experto, cada ronda completada reduce la anticipación.
+        extra = datos["etapa_survival"] - len(ajustes.CANCIONES) + 1
+        duracion = duracion / (1 + extra * ajustes.ACELERACION_SURVIVAL)
     llegada = datos["proximo_pulso"] * pulso_ms
     # Las llegadas siempre caen en pulsos o medios pulsos de la canción.
     while tiempo >= llegada - duracion:
-        datos["notas"].append(nota.Nota(random.randint(0, 3), llegada, duracion))
-        ritmo = ajustes.PULSOS_ENTRE_NOTAS[nivel]
+        columna = random.randint(0, 3)
+        if datos["secuencia"]:
+            indice = datos["indice_ritmo"] % len(datos["secuencia"])
+            columna = datos["secuencia"][indice]
+        datos["notas"].append(nota.Nota(columna, llegada, duracion))
         intervalo = ritmo[datos["indice_ritmo"] % len(ritmo)]
         datos["proximo_pulso"] = datos["proximo_pulso"] + intervalo
         datos["indice_ritmo"] = datos["indice_ritmo"] + 1
@@ -95,3 +111,19 @@ def actualizar(datos, tiempo):
             datos["errores"] = datos["errores"] + 1
             datos["mensaje"] = "SE PASÓ UNA SEÑAL"
             datos["aviso"] = ajustes.DURACION_MENSAJE
+
+
+def siguiente_survival(datos):
+    """Sube de nivel conservando puntos, aciertos totales y tiempo acumulado."""
+    nuevo = crear_partida(0, "survival")
+    nuevo["etapa_survival"] = datos["etapa_survival"] + 1
+    nuevo["cancion"] = nuevo["etapa_survival"]
+    if nuevo["cancion"] >= len(ajustes.CANCIONES):
+        nuevo["cancion"] = len(ajustes.CANCIONES) - 1
+    nuevo["puntos"] = datos["puntos"]
+    nuevo["pasos_total"] = datos["pasos_total"]
+    nuevo["tiempo_total"] = datos["tiempo_total"] + datos["tiempo"]
+    nuevo["mensaje"] = "¡NIVEL SUPERADO!"
+    nuevo["aviso"] = ajustes.AVISO_NIVEL_SUPERADO
+    # La lista y los errores empiezan vacíos para la nueva ronda.
+    return nuevo

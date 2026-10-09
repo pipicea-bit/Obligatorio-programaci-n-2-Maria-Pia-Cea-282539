@@ -36,6 +36,7 @@ def main():
     andando = True
 
     while andando:
+        estado_anterior = estado
         # 1. Escuchar: cada pantalla tiene sus propios controles.
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -82,6 +83,10 @@ def main():
                             editando_nombre = True
                             configurando_rival = True
                             estado = "personalizacion"
+                        elif sesion["modo"] == "survival":
+                            datos = modos.nueva_ronda(sesion, 0)
+                            inicio_musica = audio.reproducir(canciones, 0)
+                            estado = "jugando"
                         else:
                             estado = "canciones"
                             audio.reproducir(canciones, seleccion)
@@ -119,12 +124,15 @@ def main():
                     sesion["resultados"] = []
                     personaje = sesion["personajes"][0]
                     datos = modos.nueva_ronda(sesion, seleccion)
-                    inicio_musica = audio.reproducir(canciones, seleccion)
+                    inicio_musica = audio.reproducir(canciones, datos["cancion"])
                     estado = "jugando"
                 elif evento.key == pygame.K_c:
                     personaje = sesion["personajes"][0]
-                    estado = "canciones"
-                    audio.reproducir(canciones, seleccion)
+                    if sesion["modo"] == "survival":
+                        estado = "modos"
+                    else:
+                        estado = "canciones"
+                        audio.reproducir(canciones, seleccion)
                 elif evento.key == pygame.K_m:
                     audio.detener()
                     personaje = sesion["personajes"][0]
@@ -150,8 +158,15 @@ def main():
                 estado = partida.obtener_estado(datos)
             if errores_despues > errores_antes:
                 sonidos["error"].play()
-        if estado in ["victoria", "derrota", "resultado_duelo"]:
+        if estado == "subir_nivel":
+            datos = partida.siguiente_survival(datos)
+            sesion["rondas"][0] = datos
+            inicio_musica = audio.reproducir(canciones, datos["cancion"])
+            estado = "jugando"
+        if estado in ["victoria", "derrota", "resultado_duelo"] and estado != estado_anterior:
             audio.detener()
+            # El cambio de estado evita repetir el sonido en cada cuadro.
+            audio.reproducir_resultado(sonidos, estado)
         for bailarin in sesion["personajes"]:
             if estado == "jugando":
                 bailarin.actualizar_baile()

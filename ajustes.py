@@ -73,3 +73,7 @@ PULSOS_ANTICIPACION = [3, 2, 2.2, 1.5, 1]
 # Medio y difícil alternan un pulso y medio pulso para suavizar el salto.
 PULSOS_ENTRE_NOTAS = [[1], [1, 0.5], [1, 0.5], [0.5], [0.5]]
 PRIMER_PULSO = 4
+
+# Survival avanza al completar la meta de cada nivel.
+ACELERACION_SURVIVAL = 0.12
+AVISO_NIVEL_SUPERADO = 90

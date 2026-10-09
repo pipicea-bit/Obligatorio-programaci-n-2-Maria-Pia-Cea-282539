@@ -7,7 +7,7 @@ Juego de ritmo de baile urbano para el Obligatorio 1 de Programación 2.
 Esta versión permite elegir los colores de una bailarina o un bailarín de pixel art, con
 gorra, remera corta, pantalón amplio y zapatillas. La estética toma como
 inspiración los arcades de pelea de los años 90, con un personaje original. La partida ya incluye señales que bajan, puntaje y pantallas de victoria y
-derrota. Incluye dos efectos de sonido arcade y cinco pistas instrumentales originales. El informe está pendiente.
+derrota. Incluye cuatro efectos de sonido arcade y cinco pistas instrumentales originales. El informe está pendiente.
 
 ## Instalación y ejecución
 
@@ -109,12 +109,17 @@ Cada letra indica un color de la paleta; no se usan sprites de otros juegos.
 
 - `assets/acierto.wav`: efecto agudo de dos notas.
 - `assets/error.wav`: efecto grave descendente.
+- `assets/victoria.wav`: melodía alegre de festejo cuando aparece «¡GANASTE!».
+- `assets/derrota.wav`: melodía triste descendente cuando aparece «¡PERDISTE!».
+
+Las melodías de resultado suenan una sola vez al terminar y se detienen si
+reiniciás. El sonido de derrota también se usa al terminar survival.
 
 - `assets/barrio.wav`, `assets/neon.wav`, `assets/cypher.wav`,
   `assets/rooftop.wav` y `assets/final.wav`: pistas instrumentales
   con percusión, bajo y melodías sintetizadas.
 
-Los siete archivos de audio fueron sintetizados específicamente para Grooving con ayuda de
+Los nueve archivos de audio fueron sintetizados específicamente para Grooving con ayuda de
 ChatGPT/Codex; no se descargaron de bancos de audio ni contienen grabaciones
 ajenas. Se permite reutilizarlos bajo licencia CC0 1.0. Se cargan una sola vez
 antes del bucle principal; la selección cambia cuál se reproduce. El volumen se configura en `ajustes.py`.
@@ -157,11 +162,14 @@ y abajo y confirmá con `Enter`.
   canción, dificultad y secuencia de flechas. Cada jugador termina al alcanzar la
   meta o el límite de errores; el rival puede seguir hasta terminar. Gana quien tenga más puntos; si empatan, quien
   tenga menos errores. Si ambos valores coinciden, hay empate.
-- **Survival:** sin meta de aciertos. La música y las flechas continúan hasta
-  agotar el límite de errores del nivel elegido. El tiempo y los puntos muestran
-  cuánto resististe. Cada 20 aciertos las señales nuevas se aceleran; desde la
-  segunda etapa aparecen cada medio pulso. La aceleración se limita a seis
-  etapas para mantener una velocidad jugable. Las flechas siguen la música.
+- **Survival:** empieza siempre en fácil. Al completar 20 aciertos, pasa
+  automáticamente a medio; luego exige 30, 40, 50 y 60 aciertos para avanzar
+  por difícil, súper difícil y experto. Al cambiar de nivel cambia la canción,
+  se renuevan los errores y se conservan puntos, aciertos totales y tiempo.
+  Después de experto sigue con rondas de 60 aciertos cada vez más rápidas
+  (Experto + 1, + 2, etc.). Solo termina cuando agotás los errores. `Enter`
+  reinicia desde fácil. No hace falta elegir canción en este modo.
+
 
 El jugador 1 usa las flechas. El jugador 2 usa `A` (izquierda), `S` (abajo),
 `W` (arriba) y `D` (derecha). La ventana se amplía para mostrar las dos pistas

@@ -72,14 +72,15 @@ def juego(pantalla, fuentes, personaje, datos, estado):
     dibujar_texto(pantalla, fuentes["chica"], datos["modo"].upper(), ajustes.LILA, 550, 25)
     dibujar_texto(pantalla, fuentes["texto"], f"PUNTOS {datos['puntos']}", ajustes.BLANCO, 250, 25)
     meta = str(ajustes.METAS_PASOS[datos["cancion"]])
-    if datos["modo"] == "survival":
-        meta = "SIN FIN"
     contador = f"PASOS {datos['pasos']}/{meta}  ERRORES {datos['errores']}/{ajustes.LIMITES_ERRORES[datos['cancion']]}"
     dibujar_texto(pantalla, fuentes["chica"], contador, ajustes.ROSA, 40, 65)
     if datos["modo"] == "survival":
-        segundos = int(datos["tiempo"] / 1000)
+        segundos = int((datos["tiempo_total"] + datos["tiempo"]) / 1000)
         dibujar_texto(pantalla, fuentes["chica"], f"TIEMPO: {segundos} S", ajustes.BLANCO, 550, 110)
-    dibujar_texto(pantalla, fuentes["chica"], ajustes.CANCIONES[datos["cancion"]]["nivel"], ajustes.MENTA, 550, 65)
+    nivel = ajustes.CANCIONES[datos["cancion"]]["nivel"]
+    if datos["modo"] == "survival" and datos["etapa_survival"] >= 5:
+        nivel = "EXPERTO + " + str(datos["etapa_survival"] - 4)
+    dibujar_texto(pantalla, fuentes["chica"], nivel, ajustes.MENTA, 550, 65)
     dibujar_texto(pantalla, fuentes["chica"], personaje.nombre, ajustes.AMARILLO, 545, 170)
     personaje.dibujar(pantalla)
     if estado == "jugando":
@@ -98,7 +99,10 @@ def juego(pantalla, fuentes, personaje, datos, estado):
             mensaje = "¡PERDISTE!"
         dibujar_texto(pantalla, fuentes["texto"], mensaje, ajustes.AMARILLO, 70, 260)
         dibujar_texto(pantalla, fuentes["chica"], "ENTER: VOLVER A JUGAR", ajustes.MENTA, 70, 325)
-        dibujar_texto(pantalla, fuentes["chica"], "C: CAMBIAR NIVEL", ajustes.ROSA, 70, 365)
+        if datos["modo"] == "survival":
+            dibujar_texto(pantalla, fuentes["chica"], f"TOTAL: {datos['pasos_total']} ACIERTOS", ajustes.ROSA, 70, 365)
+        else:
+            dibujar_texto(pantalla, fuentes["chica"], "C: CAMBIAR NIVEL", ajustes.ROSA, 70, 365)
         dibujar_texto(pantalla, fuentes["chica"], "P: CAMBIAR PERSONAJE", ajustes.BLANCO, 70, 405)
         dibujar_texto(pantalla, fuentes["chica"], "M: ELEGIR MODO", ajustes.LILA, 70, 445)
     cancion = ajustes.CANCIONES[datos["cancion"]]
@@ -138,7 +142,7 @@ def elegir_modo(pantalla, fuentes, personaje, seleccion):
     dibujar_texto(pantalla, fuentes["titulo"], "GROOVING", ajustes.AMARILLO, 40, 53)
     dibujar_texto(pantalla, fuentes["texto"], "ELEGÍ EL MODO", ajustes.MENTA, 50, 175)
     nombres = ["SOLO", "1VS1", "SURVIVAL"]
-    detalles = ["ALCANZÁ LA META DEL NIVEL", "FLECHAS VS WASD / A LA VEZ", "RESISTÍ HASTA AGOTAR ERRORES"]
+    detalles = ["ALCANZÁ LA META DEL NIVEL", "FLECHAS VS WASD / A LA VEZ", "SUPERÁ NIVELES HASTA PERDER"]
     for i in range(3):
         color = ajustes.BLANCO
         marca = "  "
