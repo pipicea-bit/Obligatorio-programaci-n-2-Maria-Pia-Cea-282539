@@ -77,3 +77,8 @@ PRIMER_PULSO = 4
 # Survival avanza al completar la meta de cada nivel.
 ACELERACION_SURVIVAL = 0.12
 AVISO_NIVEL_SUPERADO = 90
+
+BOTON_VOLVER = (650, 12, 130, 32)
+
+CUENTA_SEGUNDOS = 3
+TAMANIO_CUENTA = 160

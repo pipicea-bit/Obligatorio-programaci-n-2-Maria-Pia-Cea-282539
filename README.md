@@ -35,6 +35,8 @@ python3 main.py
   personaje. `Retroceso` borra. Podés volver a editar haciendo clic en el campo.
   El máximo es de 12 caracteres. Mientras escribís, los números son parte del
   nombre; después de confirmar, las teclas 1 a 5 personalizan el personaje.
+- Botón **Volver**: regresa a la pantalla anterior sin cerrar el juego.
+  Desde una partida se vuelve a la selección; al empezar de nuevo se reinicia.
 - `Esc` o la X de la ventana: salir.
 
 ## Cómo jugar
@@ -98,6 +100,7 @@ La canción reinicia junto con la partida.
 - `jugador.py`: clase `Jugador`, nombre, apariencia y dibujo del personaje.
 - `poses.py`: dibujos de brazos y piernas para los cuatro pasos de cada personaje.
 - `nota.py`: clase `Nota`, movimiento y dibujo de las flechas.
+- `navegacion.py`: determina la pantalla anterior y el personaje a editar.
 - `modos.py`: sesión, secuencia compartida, controles y ganador del duelo.
 - `partida.py`: creación de partidas, reglas, aciertos, errores y puntaje.
 - `pantallas.py`: dibujo de la personalización, pista y resultados.
@@ -180,3 +183,16 @@ inicia una revancha, `C` cambia el nivel y `M` vuelve a elegir el modo.
 
 `modos.py` guarda la sesión, los personajes, las dos rondas, la secuencia compartida y los
 resultados del duelo. Todas las estructuras son listas y diccionarios.
+
+## Personalizar al segundo jugador
+
+Al elegir 1vs1 aparece **Personalizá al jugador 2**. El segundo jugador puede
+usar directamente 1 a 5 para elegir ropa, pelo, bailarina/bailarín y accesorios.
+Para su nombre, hace clic en el campo Nombre, escribe y confirma con Enter.
+Luego presiona Espacio para confirmar su personaje y elegir la canción.
+Los cambios no modifican el personaje del jugador 1. Desde las canciones,
+**Volver** regresa a esta personalización conservando las elecciones.
+
+En 1vs1 hay una cuenta regresiva de **3, 2, 1** antes de empezar y en cada
+revancha. Durante esos tres segundos no corre la música, no bajan señales y
+las flechas/WASD no suman errores. El botón Volver y Esc siguen funcionando.

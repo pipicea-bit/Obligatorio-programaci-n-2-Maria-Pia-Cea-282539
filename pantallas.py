@@ -62,7 +62,10 @@ def personalizacion(pantalla, fuentes, personaje, nombre_confirmado, editando_no
     dibujar_texto(pantalla, fuentes["chica"], nombre_confirmado, ajustes.AMARILLO, 545, 170)
     personaje.dibujar(pantalla)
     dibujar_texto(pantalla, fuentes["chica"], "PERSONALIZACIÓN  /  ESC: SALIR", ajustes.BLANCO, 50, 552)
-    dibujar_texto(pantalla, fuentes["chica"], "ESPACIO: ELEGIR MODO", ajustes.MENTA, 50, 520)
+    continuar = "ESPACIO: ELEGIR MODO"
+    if rival:
+        continuar = "ESPACIO: CONFIRMAR JUGADOR 2"
+    dibujar_texto(pantalla, fuentes["chica"], continuar, ajustes.MENTA, 50, 520)
 
 
 def juego(pantalla, fuentes, personaje, datos, estado):
@@ -202,3 +205,23 @@ def duelo_simultaneo(pantalla, fuentes, sesion):
             dibujar_texto(panel, fuentes["chica"], aviso, ajustes.ROSA, 40, 560)
         else:
             dibujar_texto(panel, fuentes["chica"], "ESC: SALIR", ajustes.BLANCO, 40, 560)
+
+
+def boton_volver(pantalla, fuentes):
+    """Dibuja un botón de regreso visible también en la ventana del duelo."""
+    rect = pygame.Rect(ajustes.BOTON_VOLVER)
+    rect.x = rect.x + pantalla.get_width() - ajustes.ANCHO
+    pygame.draw.rect(pantalla, ajustes.CONTORNO, rect)
+    pygame.draw.rect(pantalla, ajustes.MENTA, rect, ajustes.GROSOR_LINEA)
+    dibujar_texto(pantalla, fuentes["chica"], "< VOLVER", ajustes.BLANCO, rect.x + 15, 20)
+
+def cuenta_regresiva(pantalla, fuentes, sesion, transcurrido):
+    """Muestra el 3, 2, 1 en ambas pistas antes de activar música y señales."""
+    duelo_simultaneo(pantalla, fuentes, sesion)
+    numero = ajustes.CUENTA_SEGUNDOS - transcurrido // 1000
+    for i in range(2):
+        x = i * ajustes.ANCHO
+        pygame.draw.rect(pantalla, ajustes.FONDO, (x + 40, 165, 390, 330))
+        dibujar_texto(pantalla, fuentes["texto"], "¡PREPARATE!", ajustes.MENTA, x + 125, 205)
+        imagen = fuentes["cuenta"].render(str(numero), False, ajustes.AMARILLO)
+        pantalla.blit(imagen, (x + 230 - imagen.get_width() // 2, 250))
