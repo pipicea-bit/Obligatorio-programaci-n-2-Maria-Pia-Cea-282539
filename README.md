@@ -145,10 +145,8 @@ Conservá la carpeta `assets` junto a `main.py`, también al descargar o entrega
 Se utilizó ChatGPT/Codex como apoyo para organizar, generar y modificar
 el código, las poses, los efectos de sonido, las canciones y la documentación,
 siguiendo los materiales de las clases y las decisiones de la estudiante.
-El afiche fue aportado por María Pía Cea y, según su declaración, diseñado sin IA.
-Los comentarios se elaboraron con apoyo de IA y participación de la autora.
-La revisión y comprensión del resto del código por parte de la estudiante
-siguen pendientes.
+Los comentarios se elaboraron propiamente y con apoyo de IA.
+La revisión y comprensión del resto del código fue por parte de la estudiante.
 
 ## Repositorio
 
