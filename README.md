@@ -2,12 +2,18 @@
 
 Juego de ritmo de baile urbano para el Obligatorio 1 de Programación 2.
 
+## El nombre
+
+Elegí Grooving por la palabra groove. Para mí es el alma del movimiento,
+lo que le da estilo y personalidad al baile. Mi groove es propio y me
+representa; esa misma identidad es la marca personal que busco en mis trabajos.
+
 ## Versión jugable
 
 Esta versión permite elegir los colores de una bailarina o un bailarín de pixel art, con
 gorra, remera corta, pantalón amplio y zapatillas. La estética toma como
 inspiración los arcades de pelea de los años 90, con un personaje original. La partida ya incluye señales que bajan, puntaje y pantallas de victoria y
-derrota. Incluye cuatro efectos de sonido arcade y cinco pistas instrumentales originales. El informe está pendiente.
+derrota. Incluye cuatro efectos de sonido arcade y cinco pistas instrumentales originales. El informe de cinco páginas y el afiche están incluidos en el ZIP de entrega.
 
 ## Instalación y ejecución
 
@@ -95,7 +101,9 @@ La canción reinicia junto con la partida.
 ## Archivos
 
 - `audio.py`: carga de efectos y canciones, reproducción y canal reservado.
-- `main.py`: ventana, eventos, estados y bucle principal.
+- `main.py`: punto de entrada y bucle principal de 23 líneas.
+- `controles.py`: funciones para los eventos de cada pantalla.
+- `gestion.py`: estado inicial, actualización y selección de pantalla.
 - `ajustes.py`: colores, medidas y opciones de personalización.
 - `jugador.py`: clase `Jugador`, nombre, apariencia y dibujo del personaje.
 - `poses.py`: dibujos de brazos y piernas para los cuatro pasos de cada personaje.
@@ -134,9 +142,13 @@ Conservá la carpeta `assets` junto a `main.py`, también al descargar o entrega
 
 ## Uso de inteligencia artificial
 
-Se utilizó ChatGPT/Codex como apoyo para organizar y generar y modificar
-el código, las poses, los efectos de sonido y la documentación, siguiendo los materiales de las clases.
-La revisión por parte de la estudiante y los comentarios personales están pendientes.
+Se utilizó ChatGPT/Codex como apoyo para organizar, generar y modificar
+el código, las poses, los efectos de sonido, las canciones y la documentación,
+siguiendo los materiales de las clases y las decisiones de la estudiante.
+El afiche fue aportado por María Pía Cea y, según su declaración, diseñado sin IA.
+Los comentarios se elaboraron con apoyo de IA y participación de la autora.
+La revisión y comprensión del resto del código por parte de la estudiante
+siguen pendientes.
 
 ## Repositorio
 
